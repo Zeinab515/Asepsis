@@ -1,0 +1,1956 @@
+{
+  "generated_at": "2026-11-18T00:32:36.815432",
+  "git_commit": "local-dev",
+  "dataset_hash": "ad7f11a0b78d68302f301763e223f45e208776bfaf2e69451dd364a2439bcfd1",
+  "total_opportunities": 917,
+  "total_complied": 202,
+  "baseline_compliance_rate": 0.2203,
+  "benchmark_table": [
+    {
+      "model_name": "Dummy",
+      "validation_design": "repeated_stratified_cv",
+      "ablation": "all_features",
+      "pr_auc": {
+        "mean": 0.2203,
+        "std": 0.0021,
+        "ci_low": 0.2197,
+        "ci_high": 0.2209
+      },
+      "roc_auc": {
+        "mean": 0.5,
+        "std": 0.0,
+        "ci_low": 0.5,
+        "ci_high": 0.5
+      },
+      "f1": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "precision": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "recall": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "brier_score": {
+        "mean": 0.1718,
+        "std": 0.0012,
+        "ci_low": 0.1714,
+        "ci_high": 0.1721
+      },
+      "confusion_matrix": {
+        "tn": 143,
+        "fp": 0,
+        "fn": 40,
+        "tp": 0,
+        "total": 183
+      },
+      "notes": "5x10 repeated stratified CV. Caveat: lack of worker/session IDs may yield optimistic estimates due to clustering."
+    },
+    {
+      "model_name": "LogisticRegression",
+      "validation_design": "repeated_stratified_cv",
+      "ablation": "all_features",
+      "pr_auc": {
+        "mean": 0.7295,
+        "std": 0.0566,
+        "ci_low": 0.7138,
+        "ci_high": 0.7452
+      },
+      "roc_auc": {
+        "mean": 0.9073,
+        "std": 0.0256,
+        "ci_low": 0.9002,
+        "ci_high": 0.9144
+      },
+      "f1": {
+        "mean": 0.7764,
+        "std": 0.0344,
+        "ci_low": 0.7668,
+        "ci_high": 0.7859
+      },
+      "precision": {
+        "mean": 0.7211,
+        "std": 0.0484,
+        "ci_low": 0.7077,
+        "ci_high": 0.7345
+      },
+      "recall": {
+        "mean": 0.844,
+        "std": 0.0448,
+        "ci_low": 0.8316,
+        "ci_high": 0.8565
+      },
+      "brier_score": {
+        "mean": 0.0882,
+        "std": 0.0105,
+        "ci_low": 0.0853,
+        "ci_high": 0.0911
+      },
+      "confusion_matrix": {
+        "tn": 129,
+        "fp": 13,
+        "fn": 6,
+        "tp": 34,
+        "total": 183
+      },
+      "notes": "5x10 repeated stratified CV. Caveat: lack of worker/session IDs may yield optimistic estimates due to clustering."
+    },
+    {
+      "model_name": "DecisionTree",
+      "validation_design": "repeated_stratified_cv",
+      "ablation": "all_features",
+      "pr_auc": {
+        "mean": 0.6681,
+        "std": 0.0636,
+        "ci_low": 0.6505,
+        "ci_high": 0.6857
+      },
+      "roc_auc": {
+        "mean": 0.9081,
+        "std": 0.0216,
+        "ci_low": 0.9021,
+        "ci_high": 0.9141
+      },
+      "f1": {
+        "mean": 0.702,
+        "std": 0.0498,
+        "ci_low": 0.6882,
+        "ci_high": 0.7158
+      },
+      "precision": {
+        "mean": 0.6535,
+        "std": 0.0679,
+        "ci_low": 0.6347,
+        "ci_high": 0.6724
+      },
+      "recall": {
+        "mean": 0.7859,
+        "std": 0.1402,
+        "ci_low": 0.7471,
+        "ci_high": 0.8248
+      },
+      "brier_score": {
+        "mean": 0.0955,
+        "std": 0.0127,
+        "ci_low": 0.092,
+        "ci_high": 0.099
+      },
+      "confusion_matrix": {
+        "tn": 125,
+        "fp": 17,
+        "fn": 8,
+        "tp": 31,
+        "total": 183
+      },
+      "notes": "5x10 repeated stratified CV. Caveat: lack of worker/session IDs may yield optimistic estimates due to clustering."
+    },
+    {
+      "model_name": "RandomForest",
+      "validation_design": "repeated_stratified_cv",
+      "ablation": "all_features",
+      "pr_auc": {
+        "mean": 0.7689,
+        "std": 0.0715,
+        "ci_low": 0.7491,
+        "ci_high": 0.7887
+      },
+      "roc_auc": {
+        "mean": 0.9244,
+        "std": 0.0234,
+        "ci_low": 0.9179,
+        "ci_high": 0.9309
+      },
+      "f1": {
+        "mean": 0.7786,
+        "std": 0.0375,
+        "ci_low": 0.7682,
+        "ci_high": 0.789
+      },
+      "precision": {
+        "mean": 0.7213,
+        "std": 0.0476,
+        "ci_low": 0.7081,
+        "ci_high": 0.7345
+      },
+      "recall": {
+        "mean": 0.85,
+        "std": 0.0591,
+        "ci_low": 0.8336,
+        "ci_high": 0.8663
+      },
+      "brier_score": {
+        "mean": 0.0886,
+        "std": 0.0096,
+        "ci_low": 0.0859,
+        "ci_high": 0.0912
+      },
+      "confusion_matrix": {
+        "tn": 129,
+        "fp": 13,
+        "fn": 6,
+        "tp": 34,
+        "total": 183
+      },
+      "notes": "5x10 repeated stratified CV. Caveat: lack of worker/session IDs may yield optimistic estimates due to clustering."
+    },
+    {
+      "model_name": "Dummy",
+      "validation_design": "repeated_stratified_cv",
+      "ablation": "indication_only",
+      "pr_auc": {
+        "mean": 0.2203,
+        "std": 0.0021,
+        "ci_low": 0.2197,
+        "ci_high": 0.2209
+      },
+      "roc_auc": {
+        "mean": 0.5,
+        "std": 0.0,
+        "ci_low": 0.5,
+        "ci_high": 0.5
+      },
+      "f1": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "precision": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "recall": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "brier_score": {
+        "mean": 0.1718,
+        "std": 0.0012,
+        "ci_low": 0.1714,
+        "ci_high": 0.1721
+      },
+      "confusion_matrix": {
+        "tn": 143,
+        "fp": 0,
+        "fn": 40,
+        "tp": 0,
+        "total": 183
+      },
+      "notes": "5x10 repeated stratified CV. Caveat: lack of worker/session IDs may yield optimistic estimates due to clustering."
+    },
+    {
+      "model_name": "LogisticRegression",
+      "validation_design": "repeated_stratified_cv",
+      "ablation": "indication_only",
+      "pr_auc": {
+        "mean": 0.658,
+        "std": 0.0539,
+        "ci_low": 0.6431,
+        "ci_high": 0.673
+      },
+      "roc_auc": {
+        "mean": 0.8905,
+        "std": 0.03,
+        "ci_low": 0.8822,
+        "ci_high": 0.8988
+      },
+      "f1": {
+        "mean": 0.7123,
+        "std": 0.0312,
+        "ci_low": 0.7037,
+        "ci_high": 0.721
+      },
+      "precision": {
+        "mean": 0.5859,
+        "std": 0.0348,
+        "ci_low": 0.5763,
+        "ci_high": 0.5956
+      },
+      "recall": {
+        "mean": 0.9109,
+        "std": 0.0446,
+        "ci_low": 0.8985,
+        "ci_high": 0.9233
+      },
+      "brier_score": {
+        "mean": 0.0942,
+        "std": 0.0106,
+        "ci_low": 0.0912,
+        "ci_high": 0.0971
+      },
+      "confusion_matrix": {
+        "tn": 116,
+        "fp": 26,
+        "fn": 3,
+        "tp": 36,
+        "total": 183
+      },
+      "notes": "5x10 repeated stratified CV. Caveat: lack of worker/session IDs may yield optimistic estimates due to clustering."
+    },
+    {
+      "model_name": "DecisionTree",
+      "validation_design": "repeated_stratified_cv",
+      "ablation": "indication_only",
+      "pr_auc": {
+        "mean": 0.6555,
+        "std": 0.0538,
+        "ci_low": 0.6406,
+        "ci_high": 0.6704
+      },
+      "roc_auc": {
+        "mean": 0.8888,
+        "std": 0.0281,
+        "ci_low": 0.881,
+        "ci_high": 0.8965
+      },
+      "f1": {
+        "mean": 0.7123,
+        "std": 0.0312,
+        "ci_low": 0.7037,
+        "ci_high": 0.721
+      },
+      "precision": {
+        "mean": 0.5859,
+        "std": 0.0348,
+        "ci_low": 0.5763,
+        "ci_high": 0.5956
+      },
+      "recall": {
+        "mean": 0.9109,
+        "std": 0.0446,
+        "ci_low": 0.8985,
+        "ci_high": 0.9233
+      },
+      "brier_score": {
+        "mean": 0.0941,
+        "std": 0.0112,
+        "ci_low": 0.091,
+        "ci_high": 0.0972
+      },
+      "confusion_matrix": {
+        "tn": 116,
+        "fp": 26,
+        "fn": 3,
+        "tp": 36,
+        "total": 183
+      },
+      "notes": "5x10 repeated stratified CV. Caveat: lack of worker/session IDs may yield optimistic estimates due to clustering."
+    },
+    {
+      "model_name": "RandomForest",
+      "validation_design": "repeated_stratified_cv",
+      "ablation": "indication_only",
+      "pr_auc": {
+        "mean": 0.6574,
+        "std": 0.0536,
+        "ci_low": 0.6425,
+        "ci_high": 0.6722
+      },
+      "roc_auc": {
+        "mean": 0.8877,
+        "std": 0.029,
+        "ci_low": 0.8797,
+        "ci_high": 0.8958
+      },
+      "f1": {
+        "mean": 0.7123,
+        "std": 0.0312,
+        "ci_low": 0.7037,
+        "ci_high": 0.721
+      },
+      "precision": {
+        "mean": 0.5859,
+        "std": 0.0348,
+        "ci_low": 0.5763,
+        "ci_high": 0.5956
+      },
+      "recall": {
+        "mean": 0.9109,
+        "std": 0.0446,
+        "ci_low": 0.8985,
+        "ci_high": 0.9233
+      },
+      "brier_score": {
+        "mean": 0.0941,
+        "std": 0.0112,
+        "ci_low": 0.091,
+        "ci_high": 0.0972
+      },
+      "confusion_matrix": {
+        "tn": 116,
+        "fp": 26,
+        "fn": 3,
+        "tp": 36,
+        "total": 183
+      },
+      "notes": "5x10 repeated stratified CV. Caveat: lack of worker/session IDs may yield optimistic estimates due to clustering."
+    },
+    {
+      "model_name": "Dummy",
+      "validation_design": "repeated_stratified_cv",
+      "ablation": "without_indication",
+      "pr_auc": {
+        "mean": 0.2203,
+        "std": 0.0021,
+        "ci_low": 0.2197,
+        "ci_high": 0.2209
+      },
+      "roc_auc": {
+        "mean": 0.5,
+        "std": 0.0,
+        "ci_low": 0.5,
+        "ci_high": 0.5
+      },
+      "f1": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "precision": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "recall": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "brier_score": {
+        "mean": 0.1718,
+        "std": 0.0012,
+        "ci_low": 0.1714,
+        "ci_high": 0.1721
+      },
+      "confusion_matrix": {
+        "tn": 143,
+        "fp": 0,
+        "fn": 40,
+        "tp": 0,
+        "total": 183
+      },
+      "notes": "5x10 repeated stratified CV. Caveat: lack of worker/session IDs may yield optimistic estimates due to clustering."
+    },
+    {
+      "model_name": "LogisticRegression",
+      "validation_design": "repeated_stratified_cv",
+      "ablation": "without_indication",
+      "pr_auc": {
+        "mean": 0.2288,
+        "std": 0.0231,
+        "ci_low": 0.2224,
+        "ci_high": 0.2352
+      },
+      "roc_auc": {
+        "mean": 0.4952,
+        "std": 0.0401,
+        "ci_low": 0.4841,
+        "ci_high": 0.5063
+      },
+      "f1": {
+        "mean": 0.329,
+        "std": 0.0323,
+        "ci_low": 0.32,
+        "ci_high": 0.338
+      },
+      "precision": {
+        "mean": 0.2194,
+        "std": 0.0172,
+        "ci_low": 0.2146,
+        "ci_high": 0.2242
+      },
+      "recall": {
+        "mean": 0.6738,
+        "std": 0.1418,
+        "ci_low": 0.6345,
+        "ci_high": 0.7131
+      },
+      "brier_score": {
+        "mean": 0.1742,
+        "std": 0.0027,
+        "ci_low": 0.1734,
+        "ci_high": 0.175
+      },
+      "confusion_matrix": {
+        "tn": 46,
+        "fp": 96,
+        "fn": 13,
+        "tp": 27,
+        "total": 183
+      },
+      "notes": "5x10 repeated stratified CV. Caveat: lack of worker/session IDs may yield optimistic estimates due to clustering."
+    },
+    {
+      "model_name": "DecisionTree",
+      "validation_design": "repeated_stratified_cv",
+      "ablation": "without_indication",
+      "pr_auc": {
+        "mean": 0.2369,
+        "std": 0.023,
+        "ci_low": 0.2305,
+        "ci_high": 0.2433
+      },
+      "roc_auc": {
+        "mean": 0.5239,
+        "std": 0.0529,
+        "ci_low": 0.5092,
+        "ci_high": 0.5386
+      },
+      "f1": {
+        "mean": 0.3512,
+        "std": 0.0322,
+        "ci_low": 0.3423,
+        "ci_high": 0.3602
+      },
+      "precision": {
+        "mean": 0.2319,
+        "std": 0.0247,
+        "ci_low": 0.2251,
+        "ci_high": 0.2388
+      },
+      "recall": {
+        "mean": 0.7473,
+        "std": 0.1376,
+        "ci_low": 0.7092,
+        "ci_high": 0.7855
+      },
+      "brier_score": {
+        "mean": 0.1744,
+        "std": 0.0046,
+        "ci_low": 0.1731,
+        "ci_high": 0.1757
+      },
+      "confusion_matrix": {
+        "tn": 41,
+        "fp": 101,
+        "fn": 10,
+        "tp": 30,
+        "total": 183
+      },
+      "notes": "5x10 repeated stratified CV. Caveat: lack of worker/session IDs may yield optimistic estimates due to clustering."
+    },
+    {
+      "model_name": "RandomForest",
+      "validation_design": "repeated_stratified_cv",
+      "ablation": "without_indication",
+      "pr_auc": {
+        "mean": 0.2454,
+        "std": 0.0306,
+        "ci_low": 0.2369,
+        "ci_high": 0.2539
+      },
+      "roc_auc": {
+        "mean": 0.5371,
+        "std": 0.0442,
+        "ci_low": 0.5248,
+        "ci_high": 0.5493
+      },
+      "f1": {
+        "mean": 0.3426,
+        "std": 0.0357,
+        "ci_low": 0.3327,
+        "ci_high": 0.3525
+      },
+      "precision": {
+        "mean": 0.2407,
+        "std": 0.022,
+        "ci_low": 0.2346,
+        "ci_high": 0.2468
+      },
+      "recall": {
+        "mean": 0.6034,
+        "std": 0.1032,
+        "ci_low": 0.5747,
+        "ci_high": 0.632
+      },
+      "brier_score": {
+        "mean": 0.1736,
+        "std": 0.0036,
+        "ci_low": 0.1726,
+        "ci_high": 0.1746
+      },
+      "confusion_matrix": {
+        "tn": 66,
+        "fp": 76,
+        "fn": 16,
+        "tp": 24,
+        "total": 183
+      },
+      "notes": "5x10 repeated stratified CV. Caveat: lack of worker/session IDs may yield optimistic estimates due to clustering."
+    },
+    {
+      "model_name": "Dummy",
+      "validation_design": "order_opp_split",
+      "ablation": "all_features",
+      "pr_auc": {
+        "mean": 0.2428,
+        "std": 0.0,
+        "ci_low": 0.2428,
+        "ci_high": 0.2428
+      },
+      "roc_auc": {
+        "mean": 0.5,
+        "std": 0.0,
+        "ci_low": 0.5,
+        "ci_high": 0.5
+      },
+      "f1": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "precision": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "recall": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "brier_score": {
+        "mean": 0.1849,
+        "std": 0.0,
+        "ci_low": 0.1849,
+        "ci_high": 0.1849
+      },
+      "confusion_matrix": {
+        "tn": 209,
+        "fp": 0,
+        "fn": 67,
+        "tp": 0,
+        "total": 276
+      },
+      "notes": "Train on first 70% of observations, test on last 30%. Caveat: Opp order is interleaved across wards, so this is a weak proxy for time drift."
+    },
+    {
+      "model_name": "LogisticRegression",
+      "validation_design": "order_opp_split",
+      "ablation": "all_features",
+      "pr_auc": {
+        "mean": 0.5729,
+        "std": 0.0,
+        "ci_low": 0.5729,
+        "ci_high": 0.5729
+      },
+      "roc_auc": {
+        "mean": 0.8516,
+        "std": 0.0,
+        "ci_low": 0.8516,
+        "ci_high": 0.8516
+      },
+      "f1": {
+        "mean": 0.6765,
+        "std": 0.0,
+        "ci_low": 0.6765,
+        "ci_high": 0.6765
+      },
+      "precision": {
+        "mean": 0.6667,
+        "std": 0.0,
+        "ci_low": 0.6667,
+        "ci_high": 0.6667
+      },
+      "recall": {
+        "mean": 0.6866,
+        "std": 0.0,
+        "ci_low": 0.6866,
+        "ci_high": 0.6866
+      },
+      "brier_score": {
+        "mean": 0.125,
+        "std": 0.0,
+        "ci_low": 0.125,
+        "ci_high": 0.125
+      },
+      "confusion_matrix": {
+        "tn": 186,
+        "fp": 23,
+        "fn": 21,
+        "tp": 46,
+        "total": 276
+      },
+      "notes": "Train on first 70% of observations, test on last 30%. Caveat: Opp order is interleaved across wards, so this is a weak proxy for time drift."
+    },
+    {
+      "model_name": "DecisionTree",
+      "validation_design": "order_opp_split",
+      "ablation": "all_features",
+      "pr_auc": {
+        "mean": 0.5801,
+        "std": 0.0,
+        "ci_low": 0.5801,
+        "ci_high": 0.5801
+      },
+      "roc_auc": {
+        "mean": 0.8622,
+        "std": 0.0,
+        "ci_low": 0.8622,
+        "ci_high": 0.8622
+      },
+      "f1": {
+        "mean": 0.6782,
+        "std": 0.0,
+        "ci_low": 0.6782,
+        "ci_high": 0.6782
+      },
+      "precision": {
+        "mean": 0.5514,
+        "std": 0.0,
+        "ci_low": 0.5514,
+        "ci_high": 0.5514
+      },
+      "recall": {
+        "mean": 0.8806,
+        "std": 0.0,
+        "ci_low": 0.8806,
+        "ci_high": 0.8806
+      },
+      "brier_score": {
+        "mean": 0.1501,
+        "std": 0.0,
+        "ci_low": 0.1501,
+        "ci_high": 0.1501
+      },
+      "confusion_matrix": {
+        "tn": 161,
+        "fp": 48,
+        "fn": 8,
+        "tp": 59,
+        "total": 276
+      },
+      "notes": "Train on first 70% of observations, test on last 30%. Caveat: Opp order is interleaved across wards, so this is a weak proxy for time drift."
+    },
+    {
+      "model_name": "RandomForest",
+      "validation_design": "order_opp_split",
+      "ablation": "all_features",
+      "pr_auc": {
+        "mean": 0.5767,
+        "std": 0.0,
+        "ci_low": 0.5767,
+        "ci_high": 0.5767
+      },
+      "roc_auc": {
+        "mean": 0.8472,
+        "std": 0.0,
+        "ci_low": 0.8472,
+        "ci_high": 0.8472
+      },
+      "f1": {
+        "mean": 0.719,
+        "std": 0.0,
+        "ci_low": 0.719,
+        "ci_high": 0.719
+      },
+      "precision": {
+        "mean": 0.6395,
+        "std": 0.0,
+        "ci_low": 0.6395,
+        "ci_high": 0.6395
+      },
+      "recall": {
+        "mean": 0.8209,
+        "std": 0.0,
+        "ci_low": 0.8209,
+        "ci_high": 0.8209
+      },
+      "brier_score": {
+        "mean": 0.1277,
+        "std": 0.0,
+        "ci_low": 0.1277,
+        "ci_high": 0.1277
+      },
+      "confusion_matrix": {
+        "tn": 178,
+        "fp": 31,
+        "fn": 12,
+        "tp": 55,
+        "total": 276
+      },
+      "notes": "Train on first 70% of observations, test on last 30%. Caveat: Opp order is interleaved across wards, so this is a weak proxy for time drift."
+    },
+    {
+      "model_name": "Dummy",
+      "validation_design": "order_opp_split",
+      "ablation": "indication_only",
+      "pr_auc": {
+        "mean": 0.2428,
+        "std": 0.0,
+        "ci_low": 0.2428,
+        "ci_high": 0.2428
+      },
+      "roc_auc": {
+        "mean": 0.5,
+        "std": 0.0,
+        "ci_low": 0.5,
+        "ci_high": 0.5
+      },
+      "f1": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "precision": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "recall": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "brier_score": {
+        "mean": 0.1849,
+        "std": 0.0,
+        "ci_low": 0.1849,
+        "ci_high": 0.1849
+      },
+      "confusion_matrix": {
+        "tn": 209,
+        "fp": 0,
+        "fn": 67,
+        "tp": 0,
+        "total": 276
+      },
+      "notes": "Train on first 70% of observations, test on last 30%. Caveat: Opp order is interleaved across wards, so this is a weak proxy for time drift."
+    },
+    {
+      "model_name": "LogisticRegression",
+      "validation_design": "order_opp_split",
+      "ablation": "indication_only",
+      "pr_auc": {
+        "mean": 0.6388,
+        "std": 0.0,
+        "ci_low": 0.6388,
+        "ci_high": 0.6388
+      },
+      "roc_auc": {
+        "mean": 0.8528,
+        "std": 0.0,
+        "ci_low": 0.8528,
+        "ci_high": 0.8528
+      },
+      "f1": {
+        "mean": 0.6782,
+        "std": 0.0,
+        "ci_low": 0.6782,
+        "ci_high": 0.6782
+      },
+      "precision": {
+        "mean": 0.5514,
+        "std": 0.0,
+        "ci_low": 0.5514,
+        "ci_high": 0.5514
+      },
+      "recall": {
+        "mean": 0.8806,
+        "std": 0.0,
+        "ci_low": 0.8806,
+        "ci_high": 0.8806
+      },
+      "brier_score": {
+        "mean": 0.1105,
+        "std": 0.0,
+        "ci_low": 0.1105,
+        "ci_high": 0.1105
+      },
+      "confusion_matrix": {
+        "tn": 161,
+        "fp": 48,
+        "fn": 8,
+        "tp": 59,
+        "total": 276
+      },
+      "notes": "Train on first 70% of observations, test on last 30%. Caveat: Opp order is interleaved across wards, so this is a weak proxy for time drift."
+    },
+    {
+      "model_name": "DecisionTree",
+      "validation_design": "order_opp_split",
+      "ablation": "indication_only",
+      "pr_auc": {
+        "mean": 0.6359,
+        "std": 0.0,
+        "ci_low": 0.6359,
+        "ci_high": 0.6359
+      },
+      "roc_auc": {
+        "mean": 0.8535,
+        "std": 0.0,
+        "ci_low": 0.8535,
+        "ci_high": 0.8535
+      },
+      "f1": {
+        "mean": 0.6782,
+        "std": 0.0,
+        "ci_low": 0.6782,
+        "ci_high": 0.6782
+      },
+      "precision": {
+        "mean": 0.5514,
+        "std": 0.0,
+        "ci_low": 0.5514,
+        "ci_high": 0.5514
+      },
+      "recall": {
+        "mean": 0.8806,
+        "std": 0.0,
+        "ci_low": 0.8806,
+        "ci_high": 0.8806
+      },
+      "brier_score": {
+        "mean": 0.1112,
+        "std": 0.0,
+        "ci_low": 0.1112,
+        "ci_high": 0.1112
+      },
+      "confusion_matrix": {
+        "tn": 161,
+        "fp": 48,
+        "fn": 8,
+        "tp": 59,
+        "total": 276
+      },
+      "notes": "Train on first 70% of observations, test on last 30%. Caveat: Opp order is interleaved across wards, so this is a weak proxy for time drift."
+    },
+    {
+      "model_name": "RandomForest",
+      "validation_design": "order_opp_split",
+      "ablation": "indication_only",
+      "pr_auc": {
+        "mean": 0.6388,
+        "std": 0.0,
+        "ci_low": 0.6388,
+        "ci_high": 0.6388
+      },
+      "roc_auc": {
+        "mean": 0.8528,
+        "std": 0.0,
+        "ci_low": 0.8528,
+        "ci_high": 0.8528
+      },
+      "f1": {
+        "mean": 0.6782,
+        "std": 0.0,
+        "ci_low": 0.6782,
+        "ci_high": 0.6782
+      },
+      "precision": {
+        "mean": 0.5514,
+        "std": 0.0,
+        "ci_low": 0.5514,
+        "ci_high": 0.5514
+      },
+      "recall": {
+        "mean": 0.8806,
+        "std": 0.0,
+        "ci_low": 0.8806,
+        "ci_high": 0.8806
+      },
+      "brier_score": {
+        "mean": 0.1109,
+        "std": 0.0,
+        "ci_low": 0.1109,
+        "ci_high": 0.1109
+      },
+      "confusion_matrix": {
+        "tn": 161,
+        "fp": 48,
+        "fn": 8,
+        "tp": 59,
+        "total": 276
+      },
+      "notes": "Train on first 70% of observations, test on last 30%. Caveat: Opp order is interleaved across wards, so this is a weak proxy for time drift."
+    },
+    {
+      "model_name": "Dummy",
+      "validation_design": "order_opp_split",
+      "ablation": "without_indication",
+      "pr_auc": {
+        "mean": 0.2428,
+        "std": 0.0,
+        "ci_low": 0.2428,
+        "ci_high": 0.2428
+      },
+      "roc_auc": {
+        "mean": 0.5,
+        "std": 0.0,
+        "ci_low": 0.5,
+        "ci_high": 0.5
+      },
+      "f1": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "precision": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "recall": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "brier_score": {
+        "mean": 0.1849,
+        "std": 0.0,
+        "ci_low": 0.1849,
+        "ci_high": 0.1849
+      },
+      "confusion_matrix": {
+        "tn": 209,
+        "fp": 0,
+        "fn": 67,
+        "tp": 0,
+        "total": 276
+      },
+      "notes": "Train on first 70% of observations, test on last 30%. Caveat: Opp order is interleaved across wards, so this is a weak proxy for time drift."
+    },
+    {
+      "model_name": "LogisticRegression",
+      "validation_design": "order_opp_split",
+      "ablation": "without_indication",
+      "pr_auc": {
+        "mean": 0.207,
+        "std": 0.0,
+        "ci_low": 0.207,
+        "ci_high": 0.207
+      },
+      "roc_auc": {
+        "mean": 0.3926,
+        "std": 0.0,
+        "ci_low": 0.3926,
+        "ci_high": 0.3926
+      },
+      "f1": {
+        "mean": 0.246,
+        "std": 0.0,
+        "ci_low": 0.246,
+        "ci_high": 0.246
+      },
+      "precision": {
+        "mean": 0.1917,
+        "std": 0.0,
+        "ci_low": 0.1917,
+        "ci_high": 0.1917
+      },
+      "recall": {
+        "mean": 0.3433,
+        "std": 0.0,
+        "ci_low": 0.3433,
+        "ci_high": 0.3433
+      },
+      "brier_score": {
+        "mean": 0.2029,
+        "std": 0.0,
+        "ci_low": 0.2029,
+        "ci_high": 0.2029
+      },
+      "confusion_matrix": {
+        "tn": 112,
+        "fp": 97,
+        "fn": 44,
+        "tp": 23,
+        "total": 276
+      },
+      "notes": "Train on first 70% of observations, test on last 30%. Caveat: Opp order is interleaved across wards, so this is a weak proxy for time drift."
+    },
+    {
+      "model_name": "DecisionTree",
+      "validation_design": "order_opp_split",
+      "ablation": "without_indication",
+      "pr_auc": {
+        "mean": 0.2376,
+        "std": 0.0,
+        "ci_low": 0.2376,
+        "ci_high": 0.2376
+      },
+      "roc_auc": {
+        "mean": 0.4775,
+        "std": 0.0,
+        "ci_low": 0.4775,
+        "ci_high": 0.4775
+      },
+      "f1": {
+        "mean": 0.3077,
+        "std": 0.0,
+        "ci_low": 0.3077,
+        "ci_high": 0.3077
+      },
+      "precision": {
+        "mean": 0.2344,
+        "std": 0.0,
+        "ci_low": 0.2344,
+        "ci_high": 0.2344
+      },
+      "recall": {
+        "mean": 0.4478,
+        "std": 0.0,
+        "ci_low": 0.4478,
+        "ci_high": 0.4478
+      },
+      "brier_score": {
+        "mean": 0.2008,
+        "std": 0.0,
+        "ci_low": 0.2008,
+        "ci_high": 0.2008
+      },
+      "confusion_matrix": {
+        "tn": 111,
+        "fp": 98,
+        "fn": 37,
+        "tp": 30,
+        "total": 276
+      },
+      "notes": "Train on first 70% of observations, test on last 30%. Caveat: Opp order is interleaved across wards, so this is a weak proxy for time drift."
+    },
+    {
+      "model_name": "RandomForest",
+      "validation_design": "order_opp_split",
+      "ablation": "without_indication",
+      "pr_auc": {
+        "mean": 0.2045,
+        "std": 0.0,
+        "ci_low": 0.2045,
+        "ci_high": 0.2045
+      },
+      "roc_auc": {
+        "mean": 0.4033,
+        "std": 0.0,
+        "ci_low": 0.4033,
+        "ci_high": 0.4033
+      },
+      "f1": {
+        "mean": 0.3009,
+        "std": 0.0,
+        "ci_low": 0.3009,
+        "ci_high": 0.3009
+      },
+      "precision": {
+        "mean": 0.2138,
+        "std": 0.0,
+        "ci_low": 0.2138,
+        "ci_high": 0.2138
+      },
+      "recall": {
+        "mean": 0.5075,
+        "std": 0.0,
+        "ci_low": 0.5075,
+        "ci_high": 0.5075
+      },
+      "brier_score": {
+        "mean": 0.2029,
+        "std": 0.0,
+        "ci_low": 0.2029,
+        "ci_high": 0.2029
+      },
+      "confusion_matrix": {
+        "tn": 84,
+        "fp": 125,
+        "fn": 33,
+        "tp": 34,
+        "total": 276
+      },
+      "notes": "Train on first 70% of observations, test on last 30%. Caveat: Opp order is interleaved across wards, so this is a weak proxy for time drift."
+    },
+    {
+      "model_name": "Dummy",
+      "validation_design": "leave_one_ward_out",
+      "ablation": "all_features",
+      "pr_auc": {
+        "mean": 0.2268,
+        "std": 0.0397,
+        "ci_low": 0.1921,
+        "ci_high": 0.2616
+      },
+      "roc_auc": {
+        "mean": 0.5,
+        "std": 0.0,
+        "ci_low": 0.5,
+        "ci_high": 0.5
+      },
+      "f1": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "precision": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "recall": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "brier_score": {
+        "mean": 0.176,
+        "std": 0.0224,
+        "ci_low": 0.1564,
+        "ci_high": 0.1957
+      },
+      "confusion_matrix": {
+        "tn": 143,
+        "fp": 0,
+        "fn": 40,
+        "tp": 0,
+        "total": 183
+      },
+      "notes": "5-fold Leave-One-Ward-Out CV checking generalizability across physical hospital wards."
+    },
+    {
+      "model_name": "LogisticRegression",
+      "validation_design": "leave_one_ward_out",
+      "ablation": "all_features",
+      "pr_auc": {
+        "mean": 0.6921,
+        "std": 0.0977,
+        "ci_low": 0.6064,
+        "ci_high": 0.7778
+      },
+      "roc_auc": {
+        "mean": 0.8866,
+        "std": 0.0485,
+        "ci_low": 0.8441,
+        "ci_high": 0.9292
+      },
+      "f1": {
+        "mean": 0.641,
+        "std": 0.0614,
+        "ci_low": 0.5871,
+        "ci_high": 0.6948
+      },
+      "precision": {
+        "mean": 0.7074,
+        "std": 0.1463,
+        "ci_low": 0.5792,
+        "ci_high": 0.8357
+      },
+      "recall": {
+        "mean": 0.6432,
+        "std": 0.2016,
+        "ci_low": 0.4665,
+        "ci_high": 0.8199
+      },
+      "brier_score": {
+        "mean": 0.1068,
+        "std": 0.021,
+        "ci_low": 0.0884,
+        "ci_high": 0.1252
+      },
+      "confusion_matrix": {
+        "tn": 128,
+        "fp": 14,
+        "fn": 13,
+        "tp": 26,
+        "total": 183
+      },
+      "notes": "5-fold Leave-One-Ward-Out CV checking generalizability across physical hospital wards."
+    },
+    {
+      "model_name": "DecisionTree",
+      "validation_design": "leave_one_ward_out",
+      "ablation": "all_features",
+      "pr_auc": {
+        "mean": 0.6411,
+        "std": 0.1078,
+        "ci_low": 0.5466,
+        "ci_high": 0.7355
+      },
+      "roc_auc": {
+        "mean": 0.8963,
+        "std": 0.0412,
+        "ci_low": 0.8602,
+        "ci_high": 0.9324
+      },
+      "f1": {
+        "mean": 0.51,
+        "std": 0.2893,
+        "ci_low": 0.2565,
+        "ci_high": 0.7636
+      },
+      "precision": {
+        "mean": 0.4841,
+        "std": 0.3063,
+        "ci_low": 0.2156,
+        "ci_high": 0.7525
+      },
+      "recall": {
+        "mean": 0.633,
+        "std": 0.4183,
+        "ci_low": 0.2663,
+        "ci_high": 0.9997
+      },
+      "brier_score": {
+        "mean": 0.1197,
+        "std": 0.0328,
+        "ci_low": 0.091,
+        "ci_high": 0.1484
+      },
+      "confusion_matrix": {
+        "tn": 121,
+        "fp": 22,
+        "fn": 12,
+        "tp": 27,
+        "total": 183
+      },
+      "notes": "5-fold Leave-One-Ward-Out CV checking generalizability across physical hospital wards."
+    },
+    {
+      "model_name": "RandomForest",
+      "validation_design": "leave_one_ward_out",
+      "ablation": "all_features",
+      "pr_auc": {
+        "mean": 0.7079,
+        "std": 0.0724,
+        "ci_low": 0.6445,
+        "ci_high": 0.7714
+      },
+      "roc_auc": {
+        "mean": 0.8928,
+        "std": 0.0379,
+        "ci_low": 0.8596,
+        "ci_high": 0.926
+      },
+      "f1": {
+        "mean": 0.5336,
+        "std": 0.3009,
+        "ci_low": 0.2699,
+        "ci_high": 0.7974
+      },
+      "precision": {
+        "mean": 0.4814,
+        "std": 0.2856,
+        "ci_low": 0.2311,
+        "ci_high": 0.7318
+      },
+      "recall": {
+        "mean": 0.6349,
+        "std": 0.3835,
+        "ci_low": 0.2987,
+        "ci_high": 0.971
+      },
+      "brier_score": {
+        "mean": 0.111,
+        "std": 0.0243,
+        "ci_low": 0.0897,
+        "ci_high": 0.1323
+      },
+      "confusion_matrix": {
+        "tn": 123,
+        "fp": 19,
+        "fn": 12,
+        "tp": 28,
+        "total": 183
+      },
+      "notes": "5-fold Leave-One-Ward-Out CV checking generalizability across physical hospital wards."
+    },
+    {
+      "model_name": "Dummy",
+      "validation_design": "leave_one_ward_out",
+      "ablation": "indication_only",
+      "pr_auc": {
+        "mean": 0.2268,
+        "std": 0.0397,
+        "ci_low": 0.1921,
+        "ci_high": 0.2616
+      },
+      "roc_auc": {
+        "mean": 0.5,
+        "std": 0.0,
+        "ci_low": 0.5,
+        "ci_high": 0.5
+      },
+      "f1": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "precision": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "recall": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "brier_score": {
+        "mean": 0.176,
+        "std": 0.0224,
+        "ci_low": 0.1564,
+        "ci_high": 0.1957
+      },
+      "confusion_matrix": {
+        "tn": 143,
+        "fp": 0,
+        "fn": 40,
+        "tp": 0,
+        "total": 183
+      },
+      "notes": "5-fold Leave-One-Ward-Out CV checking generalizability across physical hospital wards."
+    },
+    {
+      "model_name": "LogisticRegression",
+      "validation_design": "leave_one_ward_out",
+      "ablation": "indication_only",
+      "pr_auc": {
+        "mean": 0.6714,
+        "std": 0.0536,
+        "ci_low": 0.6244,
+        "ci_high": 0.7183
+      },
+      "roc_auc": {
+        "mean": 0.8806,
+        "std": 0.0375,
+        "ci_low": 0.8477,
+        "ci_high": 0.9135
+      },
+      "f1": {
+        "mean": 0.7212,
+        "std": 0.0771,
+        "ci_low": 0.6536,
+        "ci_high": 0.7888
+      },
+      "precision": {
+        "mean": 0.6024,
+        "std": 0.1125,
+        "ci_low": 0.5038,
+        "ci_high": 0.7011
+      },
+      "recall": {
+        "mean": 0.9163,
+        "std": 0.0474,
+        "ci_low": 0.8747,
+        "ci_high": 0.9579
+      },
+      "brier_score": {
+        "mean": 0.1035,
+        "std": 0.0202,
+        "ci_low": 0.0858,
+        "ci_high": 0.1212
+      },
+      "confusion_matrix": {
+        "tn": 116,
+        "fp": 26,
+        "fn": 3,
+        "tp": 36,
+        "total": 183
+      },
+      "notes": "5-fold Leave-One-Ward-Out CV checking generalizability across physical hospital wards."
+    },
+    {
+      "model_name": "DecisionTree",
+      "validation_design": "leave_one_ward_out",
+      "ablation": "indication_only",
+      "pr_auc": {
+        "mean": 0.6714,
+        "std": 0.0536,
+        "ci_low": 0.6244,
+        "ci_high": 0.7183
+      },
+      "roc_auc": {
+        "mean": 0.8848,
+        "std": 0.0366,
+        "ci_low": 0.8527,
+        "ci_high": 0.9169
+      },
+      "f1": {
+        "mean": 0.7212,
+        "std": 0.0771,
+        "ci_low": 0.6536,
+        "ci_high": 0.7888
+      },
+      "precision": {
+        "mean": 0.6024,
+        "std": 0.1125,
+        "ci_low": 0.5038,
+        "ci_high": 0.7011
+      },
+      "recall": {
+        "mean": 0.9163,
+        "std": 0.0474,
+        "ci_low": 0.8747,
+        "ci_high": 0.9579
+      },
+      "brier_score": {
+        "mean": 0.1032,
+        "std": 0.0187,
+        "ci_low": 0.0869,
+        "ci_high": 0.1196
+      },
+      "confusion_matrix": {
+        "tn": 116,
+        "fp": 26,
+        "fn": 3,
+        "tp": 36,
+        "total": 183
+      },
+      "notes": "5-fold Leave-One-Ward-Out CV checking generalizability across physical hospital wards."
+    },
+    {
+      "model_name": "RandomForest",
+      "validation_design": "leave_one_ward_out",
+      "ablation": "indication_only",
+      "pr_auc": {
+        "mean": 0.6714,
+        "std": 0.0536,
+        "ci_low": 0.6244,
+        "ci_high": 0.7183
+      },
+      "roc_auc": {
+        "mean": 0.8806,
+        "std": 0.0375,
+        "ci_low": 0.8477,
+        "ci_high": 0.9135
+      },
+      "f1": {
+        "mean": 0.7212,
+        "std": 0.0771,
+        "ci_low": 0.6536,
+        "ci_high": 0.7888
+      },
+      "precision": {
+        "mean": 0.6024,
+        "std": 0.1125,
+        "ci_low": 0.5038,
+        "ci_high": 0.7011
+      },
+      "recall": {
+        "mean": 0.9163,
+        "std": 0.0474,
+        "ci_low": 0.8747,
+        "ci_high": 0.9579
+      },
+      "brier_score": {
+        "mean": 0.1037,
+        "std": 0.0194,
+        "ci_low": 0.0867,
+        "ci_high": 0.1207
+      },
+      "confusion_matrix": {
+        "tn": 116,
+        "fp": 26,
+        "fn": 3,
+        "tp": 36,
+        "total": 183
+      },
+      "notes": "5-fold Leave-One-Ward-Out CV checking generalizability across physical hospital wards."
+    },
+    {
+      "model_name": "Dummy",
+      "validation_design": "leave_one_ward_out",
+      "ablation": "without_indication",
+      "pr_auc": {
+        "mean": 0.2268,
+        "std": 0.0397,
+        "ci_low": 0.1921,
+        "ci_high": 0.2616
+      },
+      "roc_auc": {
+        "mean": 0.5,
+        "std": 0.0,
+        "ci_low": 0.5,
+        "ci_high": 0.5
+      },
+      "f1": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "precision": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "recall": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.0
+      },
+      "brier_score": {
+        "mean": 0.176,
+        "std": 0.0224,
+        "ci_low": 0.1564,
+        "ci_high": 0.1957
+      },
+      "confusion_matrix": {
+        "tn": 143,
+        "fp": 0,
+        "fn": 40,
+        "tp": 0,
+        "total": 183
+      },
+      "notes": "5-fold Leave-One-Ward-Out CV checking generalizability across physical hospital wards."
+    },
+    {
+      "model_name": "LogisticRegression",
+      "validation_design": "leave_one_ward_out",
+      "ablation": "without_indication",
+      "pr_auc": {
+        "mean": 0.2109,
+        "std": 0.0582,
+        "ci_low": 0.1599,
+        "ci_high": 0.2619
+      },
+      "roc_auc": {
+        "mean": 0.4422,
+        "std": 0.0595,
+        "ci_low": 0.39,
+        "ci_high": 0.4944
+      },
+      "f1": {
+        "mean": 0.2867,
+        "std": 0.1528,
+        "ci_low": 0.1528,
+        "ci_high": 0.4206
+      },
+      "precision": {
+        "mean": 0.1905,
+        "std": 0.0912,
+        "ci_low": 0.1105,
+        "ci_high": 0.2705
+      },
+      "recall": {
+        "mean": 0.623,
+        "std": 0.4135,
+        "ci_low": 0.2605,
+        "ci_high": 0.9855
+      },
+      "brier_score": {
+        "mean": 0.1792,
+        "std": 0.0212,
+        "ci_low": 0.1606,
+        "ci_high": 0.1978
+      },
+      "confusion_matrix": {
+        "tn": 46,
+        "fp": 96,
+        "fn": 15,
+        "tp": 25,
+        "total": 183
+      },
+      "notes": "5-fold Leave-One-Ward-Out CV checking generalizability across physical hospital wards."
+    },
+    {
+      "model_name": "DecisionTree",
+      "validation_design": "leave_one_ward_out",
+      "ablation": "without_indication",
+      "pr_auc": {
+        "mean": 0.2307,
+        "std": 0.0549,
+        "ci_low": 0.1826,
+        "ci_high": 0.2788
+      },
+      "roc_auc": {
+        "mean": 0.4817,
+        "std": 0.077,
+        "ci_low": 0.4141,
+        "ci_high": 0.5492
+      },
+      "f1": {
+        "mean": 0.2446,
+        "std": 0.1833,
+        "ci_low": 0.0839,
+        "ci_high": 0.4053
+      },
+      "precision": {
+        "mean": 0.1676,
+        "std": 0.1279,
+        "ci_low": 0.0555,
+        "ci_high": 0.2797
+      },
+      "recall": {
+        "mean": 0.4817,
+        "std": 0.3694,
+        "ci_low": 0.1578,
+        "ci_high": 0.8055
+      },
+      "brier_score": {
+        "mean": 0.1808,
+        "std": 0.0192,
+        "ci_low": 0.164,
+        "ci_high": 0.1976
+      },
+      "confusion_matrix": {
+        "tn": 65,
+        "fp": 77,
+        "fn": 21,
+        "tp": 18,
+        "total": 183
+      },
+      "notes": "5-fold Leave-One-Ward-Out CV checking generalizability across physical hospital wards."
+    },
+    {
+      "model_name": "RandomForest",
+      "validation_design": "leave_one_ward_out",
+      "ablation": "without_indication",
+      "pr_auc": {
+        "mean": 0.2196,
+        "std": 0.0471,
+        "ci_low": 0.1783,
+        "ci_high": 0.2608
+      },
+      "roc_auc": {
+        "mean": 0.4582,
+        "std": 0.0529,
+        "ci_low": 0.4118,
+        "ci_high": 0.5046
+      },
+      "f1": {
+        "mean": 0.2565,
+        "std": 0.0953,
+        "ci_low": 0.1729,
+        "ci_high": 0.34
+      },
+      "precision": {
+        "mean": 0.2126,
+        "std": 0.0944,
+        "ci_low": 0.1298,
+        "ci_high": 0.2954
+      },
+      "recall": {
+        "mean": 0.3516,
+        "std": 0.1519,
+        "ci_low": 0.2184,
+        "ci_high": 0.4848
+      },
+      "brier_score": {
+        "mean": 0.1796,
+        "std": 0.0224,
+        "ci_low": 0.1599,
+        "ci_high": 0.1992
+      },
+      "confusion_matrix": {
+        "tn": 82,
+        "fp": 61,
+        "fn": 25,
+        "tp": 15,
+        "total": 183
+      },
+      "notes": "5-fold Leave-One-Ward-Out CV checking generalizability across physical hospital wards."
+    }
+  ],
+  "odds_ratios": [
+    {
+      "feature": "Ward",
+      "category": "NICU",
+      "reference_category": "Medical",
+      "odds_ratio": 2.359,
+      "ci_low": 1.107,
+      "ci_high": 5.027,
+      "p_value": 0.0263,
+      "is_significant": true,
+      "interpretation": "Observed odds of compliance are 2.36x compared to reference (Medical).",
+      "confounding_warning": null
+    },
+    {
+      "feature": "Ward",
+      "category": "Ob/Gyn",
+      "reference_category": "Medical",
+      "odds_ratio": 0.535,
+      "ci_low": 0.242,
+      "ci_high": 1.183,
+      "p_value": 0.1223,
+      "is_significant": false,
+      "interpretation": "Observed odds of compliance are 0.53x (1.87x lower) compared to reference (Medical).",
+      "confounding_warning": "Ob/Gyn includes all Midwives in dataset (confounded with Profcat)."
+    },
+    {
+      "feature": "Ward",
+      "category": "Paediatric",
+      "reference_category": "Medical",
+      "odds_ratio": 2.179,
+      "ci_low": 1.182,
+      "ci_high": 4.02,
+      "p_value": 0.0126,
+      "is_significant": true,
+      "interpretation": "Observed odds of compliance are 2.18x compared to reference (Medical).",
+      "confounding_warning": null
+    },
+    {
+      "feature": "Ward",
+      "category": "Surgical",
+      "reference_category": "Medical",
+      "odds_ratio": 0.749,
+      "ci_low": 0.382,
+      "ci_high": 1.467,
+      "p_value": 0.399,
+      "is_significant": false,
+      "interpretation": "Observed odds of compliance are 0.75x (1.34x lower) compared to reference (Medical).",
+      "confounding_warning": null
+    },
+    {
+      "feature": "Profcat",
+      "category": "Medical doctor",
+      "reference_category": "Nurse",
+      "odds_ratio": 0.885,
+      "ci_low": 0.542,
+      "ci_high": 1.446,
+      "p_value": 0.6266,
+      "is_significant": false,
+      "interpretation": "Observed odds of compliance are 0.89x (1.13x lower) compared to reference (Nurse).",
+      "confounding_warning": null
+    },
+    {
+      "feature": "Profcat",
+      "category": "Midwife",
+      "reference_category": "Nurse",
+      "odds_ratio": 1.185,
+      "ci_low": 0.45,
+      "ci_high": 3.119,
+      "p_value": 0.7316,
+      "is_significant": false,
+      "interpretation": "Observed odds of compliance are 1.18x compared to reference (Nurse).",
+      "confounding_warning": "Midwives exist exclusively in Ob/Gyn ward (confounded with Ward)."
+    },
+    {
+      "feature": "Profcat",
+      "category": "Other",
+      "reference_category": "Nurse",
+      "odds_ratio": 1.074,
+      "ci_low": 0.401,
+      "ci_high": 2.876,
+      "p_value": 0.8872,
+      "is_significant": false,
+      "interpretation": "Observed odds of compliance are 1.07x compared to reference (Nurse).",
+      "confounding_warning": null
+    },
+    {
+      "feature": "Shift",
+      "category": "After noon",
+      "reference_category": "Morning",
+      "odds_ratio": 0.674,
+      "ci_low": 0.413,
+      "ci_high": 1.1,
+      "p_value": 0.1145,
+      "is_significant": false,
+      "interpretation": "Observed odds of compliance are 0.67x (1.48x lower) compared to reference (Morning).",
+      "confounding_warning": null
+    },
+    {
+      "feature": "Shift",
+      "category": "Night",
+      "reference_category": "Morning",
+      "odds_ratio": 0.797,
+      "ci_low": 0.47,
+      "ci_high": 1.349,
+      "p_value": 0.3976,
+      "is_significant": false,
+      "interpretation": "Observed odds of compliance are 0.80x (1.26x lower) compared to reference (Morning).",
+      "confounding_warning": null
+    },
+    {
+      "feature": "Indication",
+      "category": "After body fluid exposure",
+      "reference_category": "Before patient contact",
+      "odds_ratio": 81.671,
+      "ci_low": 39.351,
+      "ci_high": 169.505,
+      "p_value": 0.0,
+      "is_significant": true,
+      "interpretation": "Observed odds of compliance are 81.67x compared to reference (Before patient contact).",
+      "confounding_warning": null
+    },
+    {
+      "feature": "Indication",
+      "category": "After contact with patient Surroundings",
+      "reference_category": "Before patient contact",
+      "odds_ratio": 0.762,
+      "ci_low": 0.267,
+      "ci_high": 2.181,
+      "p_value": 0.613,
+      "is_significant": false,
+      "interpretation": "Observed odds of compliance are 0.76x (1.31x lower) compared to reference (Before patient contact).",
+      "confounding_warning": null
+    },
+    {
+      "feature": "Indication",
+      "category": "After patient contact",
+      "reference_category": "Before patient contact",
+      "odds_ratio": 14.188,
+      "ci_low": 7.285,
+      "ci_high": 27.633,
+      "p_value": 0.0,
+      "is_significant": true,
+      "interpretation": "Observed odds of compliance are 14.19x compared to reference (Before patient contact).",
+      "confounding_warning": null
+    },
+    {
+      "feature": "Indication",
+      "category": "Before an aseptic procedure",
+      "reference_category": "Before patient contact",
+      "odds_ratio": 0.81,
+      "ci_low": 0.314,
+      "ci_high": 2.092,
+      "p_value": 0.6641,
+      "is_significant": false,
+      "interpretation": "Observed odds of compliance are 0.81x (1.23x lower) compared to reference (Before patient contact).",
+      "confounding_warning": null
+    }
+  ],
+  "permutation_importance": [
+    {
+      "feature": "Indication",
+      "importance_mean": 0.2257,
+      "importance_std": 0.0126
+    },
+    {
+      "feature": "Ward",
+      "importance_mean": 0.0308,
+      "importance_std": 0.0042
+    },
+    {
+      "feature": "Shift",
+      "importance_mean": 0.001,
+      "importance_std": 0.0018
+    },
+    {
+      "feature": "Profcat",
+      "importance_mean": 0.0003,
+      "importance_std": 0.0013
+    }
+  ],
+  "conclusion": "Rigorous empirical benchmark findings:\n1. Predictive signal comes almost entirely from WHO Indication (ROC-AUC ~0.89-0.91). Models trained without Indication collapse to chance level (ROC-AUC ~0.50-0.53, matching DummyClassifier).\n2. Adding Ward, Profcat, and Shift yields marginal difference within fold-to-fold error margins. Furthermore, Midwife is completely confounded with Ob/Gyn ward.\n3. Decision rule recommendation: Random Forest does not clearly beat interpretable Logistic Regression. Therefore, we recommend the transparent Logistic Regression model (or direct Indication rate tables) for clinical infection prevention auditing.",
+  "fairness_and_ethics": "Ethical and Clinical Limitations:\n- Observational audit conducted in a single hospital (Debre Berhan, Ethiopia, 2017).\n- Hawthorne effect likely elevated observed compliance.\n- No worker IDs, patient IDs, or session IDs: estimates may be optimistic due to unmodeled clustering.\n- Absolute prohibition: Predictions and odds ratios describe associations and MUST NEVER be used to rank, evaluate, or discipline individual healthcare workers."
+}
