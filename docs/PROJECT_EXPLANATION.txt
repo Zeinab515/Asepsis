@@ -1,0 +1,401 @@
+# BIOPRESS Analytics — Comprehensive Project Master Guide
+
+**Platform Title**: BIOPRESS Analytics (Infection Prevention Decision Support Platform)  
+**Clinical Dataset**: Debre Berhan Referral Hospital, Ethiopia (Kolola & Gezahegn, 2017)  
+**Version**: 1.0.0 Production Baseline  
+**Date**: November 2026  
+
+---
+
+## 📑 Table of Contents
+1. [Executive Summary & Purpose](#1-executive-summary--purpose)
+2. [Clinical Background & The Core Dataset](#2-clinical-background--the-core-dataset)
+3. [Scientific Ground Rules & Critical Audit Findings](#3-scientific-ground-rules--critical-audit-findings)
+4. [Deep-Dive Architecture & Implementation by Track](#4-deep-dive-architecture--implementation-by-track)
+   - [Track A: Database & Security](#track-a-database--security)
+   - [Track B: Backend Architecture & Statistical Engine](#track-b-backend-architecture--statistical-engine)
+   - [Track C: Interactive Clinical Dashboard](#track-c-interactive-clinical-dashboard)
+   - [Track D: Machine Learning & Explainability (XAI)](#track-d-machine-learning--explainability-xai)
+   - [Track E: Clinical Audit AI Agent](#track-e-clinical-audit-ai-agent)
+5. [Complete Repository Structure & File Index](#5-complete-repository-structure--file-index)
+6. [Operational Manual & Running Instructions](#6-operational-manual--running-instructions)
+7. [Ethical Governance, Privacy & Clinical Limitations](#7-ethical-governance-privacy--clinical-limitations)
+
+---
+
+## 1. Executive Summary & Purpose
+
+### What is BIOPRESS Analytics?
+**BIOPRESS Analytics** is a software-only analytics and clinical decision support system designed for hospital Infection Prevention and Control (IPC) committees. It transforms observational hand hygiene audit data into statistically honest, auditable, and interpretable indicators without requiring proprietary hardware or continuous surveillance sensors.
+
+### The Problem It Solves
+Hospitals routinely conduct direct observation audits of healthcare workers according to the World Health Organization (WHO) "5 Moments for Hand Hygiene." However, standard hospital analytics frequently commit several critical scientific and governance errors:
+1. **Misleading Departmental Rankings**: Facilities frequently rank clinical wards or nursing shifts against one another on small percentage differences that are merely random sampling noise ($p > 0.05$).
+2. **Target Leakage in Machine Learning**: Audit datasets often record what action was taken (e.g., hand washing vs. glove usage). Including these columns in predictive models causes mathematical target leakage, artificially inflating accuracy to ~100% while rendering the model clinically useless.
+3. **Absence of Uncertainty Estimates**: Presenting raw percentages without sample size ($n$) and confidence intervals misleads clinicians into believing small cohorts have high precision.
+4. **Punitive Misuse**: Audit statistics are sometimes inappropriately weaponized to discipline individual staff rather than addressing systemic workflow barriers.
+
+**BIOPRESS Analytics** was engineered specifically to solve each of these problems through strict epidemiological rigor, transparent machine learning, role-based security, and uncompromising honesty in visualization.
+
+---
+
+## 2. Clinical Background & The Core Dataset
+
+The platform is grounded in a published cross-sectional observational study conducted at **Debre Berhan Referral Hospital** in Amhara, Ethiopia (*Kolola & Gezahegn, 2017*).
+
+### Dataset Dimensions & Numbers
+- **Total Hand Hygiene Opportunities Audited**: **`917`**
+- **Complied Actions (Hand Wash / Rub)**: **`202`**
+- **Overall Hospital Compliance Rate**: **`22.03%`** (matches published **`22.0%`**)
+- **95% Wilson Confidence Interval**: **`[19.46% – 24.84%]`**
+- **Observational Period**: Approximately one week of daylight and night ward observation.
+- **Physical Setting**: 5 distinct clinical hospital wards.
+
+---
+
+## 3. Scientific Ground Rules & Critical Audit Findings
+
+During the initial data audit phase, the engineering and epidemiological teams established fundamental ground rules that every layer of the codebase strictly enforces:
+
+### 1. Target Leakage Columns (Strict Exclusion)
+- **`HHaction`** (Hand Hygiene Action: Hand Wash `HW` or Hand Rub `HR`):
+  - Populated in **all 202** compliant rows (`Complied = Yes`).
+  - Empty in **all 715** non-compliant rows (`Complied = No`).
+- **`Missedbutglove`** (Missed opportunity where gloves were worn instead):
+  - Empty in **all 202** compliant rows (`Complied = Yes`).
+  - Populated in **all 715** non-compliant rows (`Complied = No`).
+- **Enforcement**: Both columns are deterministic mathematical functions of the target. They are **strictly barred** from all ML training views (`v_ml_features`) and cause runtime assertion errors if requested by ML pipelines.
+
+### 2. Observation Sequence (`Opp`) Anomalies
+- The `Opp` column runs roughly from $1$ to $917$, but ID **`788` appears twice** and ID **`787` is completely absent** (a human clerical typo in the source study).
+- `Opp` is not a clinical feature. It is stored as an observation counter, and the database uses a composite key of `(row_number, import_id)` for guaranteed uniqueness.
+
+### 3. Allowed Clinical Features
+Only 4 features are permitted for modeling:
+1. **`Ward`**: Medical, NICU, Ob/Gyn, Paediatric, Surgical (5 categories).
+2. **`Profcat`**: Nurse, Medical doctor, Midwife, Other (4 categories).
+3. **`Shift`**: Morning, After noon, Night (3 categories).
+4. **`Indication`**: The WHO 5 Hand Hygiene Moments.
+
+### 4. The Epidemiological Truth: Indication is the Sole Significant Driver
+Chi-Square ($\chi^2$) tests of independence against compliance yield:
+- **`Indication`**: $\chi^2 = 419.92, p < 0.001$ (**Statistically Significant**)
+- **`Ward`**: $\chi^2 = 5.86, p = 0.21$ (**Not Significant**)
+- **`Shift`**: $\chi^2 = 1.05, p = 0.59$ (**Not Significant**)
+- **`Profcat`**: $\chi^2 = 0.63, p = 0.89$ (**Not Significant**)
+
+```text
+Compliance by Indication Moment:
+1. After body fluid exposure:         75.8% (113/149)  CI: [68.4% – 82.0%]
+2. After patient contact:             42.8% (71/166)   CI: [35.5% – 50.4%]
+3. Before an aseptic procedure:        3.6% (7/195)    CI: [1.7% – 7.2%]
+4. After patient surroundings:         3.3% (5/152)    CI: [1.4% – 7.5%]
+5. Before patient contact:             2.4% (6/255)    CI: [1.1% – 5.0%]
+```
+
+Healthcare workers washed their hands frequently **after** touching fluids or patients (self-protection), but compliance dropped to $2–4\%$ **before** patient contact and aseptic procedures (patient protection). Differences across departments or shifts are mere sampling noise.
+
+### 5. Ob/Gyn & Midwife Structural Confounding
+In Debre Berhan hospital, **100% of Midwives were stationed in the Ob/Gyn ward**, and no midwives worked elsewhere. Consequently, `Ward = Ob/Gyn` and `Profcat = Midwife` are completely collinear and confounded.
+
+---
+
+## 4. Deep-Dive Architecture & Implementation by Track
+
+```mermaid
+graph LR
+    subgraph "Frontend Layer"
+        HTML["index.html"]
+        CSS["style.css (Tokens & Print)"]
+        JS["app.js / charts.js / api.js"]
+    end
+    
+    subgraph "Backend API Layer (FastAPI)"
+        Main["main.py (App & Lifespan)"]
+        Auth["/api/v1/auth (JWT)"]
+        Analytics["/api/v1/analytics (Wilson CI)"]
+        ImportAPI["/api/v1/imports (Contract Audit)"]
+        MLAPI["/api/v1/ml (Evaluation & XAI)"]
+        ReportAPI["/api/v1/reports (Safe CSV)"]
+        AgentAPI["/api/v1/agent (Guardrails)"]
+    end
+    
+    subgraph "Data & Modeling Layer"
+        DB[(PostgreSQL / SQLite)]
+        Views["VIEW v_ml_features<br>VIEW v_compliance_facts"]
+        MLTrain["Scikit-Learn Pipeline<br>LogReg / Trees / Odds Ratios"]
+    end
+
+    HTML --> Main
+    Main --> Auth & Analytics & ImportAPI & MLAPI & ReportAPI & AgentAPI
+    Analytics --> DB
+    ImportAPI --> DB
+    MLAPI --> MLTrain
+    MLTrain --> Views
+    Views --> DB
+```
+
+---
+
+### Track A: Database & Security
+
+#### Database Schema & Relational Design
+Implemented in [`backend/app/db/models.py`](file:///C:/Users/zeina/.gemini/antigravity/scratch/biopress-analytics/backend/app/db/models.py):
+- **`institutions`**: Represents the physical healthcare center (`Debre Berhan Referral Hospital`).
+- **`wards`**: Five physical units with database `CHECK` constraints on valid names.
+- **`data_imports`**: Stores raw file metadata, SHA-256 integrity hash, import timestamps, and JSON-encoded contract warning logs.
+- **`hand_hygiene_opportunities`**: Core transactional table. Uses composite key `(import_id, row_number)` with `CHECK` constraints ensuring `complied IS NOT NULL` and categories match allowed enumerations.
+- **`model_runs`**: Tracks reproducible ML experiments with git commit hash, hyperparameters, feature lists, and metric scores.
+- **`users` & `audit_log`**: Secure user accounts and access logging.
+
+#### Secured SQL Views
+Implemented in [`backend/app/db/session.py`](file:///C:/Users/zeina/.gemini/antigravity/scratch/biopress-analytics/backend/app/db/session.py):
+- **`v_ml_features`**: Bridges the database directly to machine learning training. It selects only `ward`, `profcat`, `shift`, `indication`, and `complied`. By omitting `hh_action` and `missed_but_glove` at the SQL view boundary, accidental leakage is physically impossible.
+- **`v_compliance_facts`**: Materializes aggregate counts for fast analytical queries.
+
+#### Auditable CSV Import Pipeline
+Implemented in [`backend/app/services/importer.py`](file:///C:/Users/zeina/.gemini/antigravity/scratch/biopress-analytics/backend/app/services/importer.py):
+1. **Pre-Flight Contract Verification**: Uploads are checked for missing columns, unexpected values, file size limits (5MB), and row limits (50,000).
+2. **Automated Defect & Anomaly Discovery**:
+   - `OPP_DUPLICATE`: Detects duplicated sequence 788.
+   - `OPP_SEQUENCE_GAP`: Detects missing sequence 787.
+   - `TARGET_LEAKAGE_HHACTION`: Validates target leakage.
+   - `TARGET_LEAKAGE_MISSEDBUTGLOVE`: Validates non-compliance leakage.
+   - `CONFOUNDING_WARD_PROFCAT`: Warns of midwife-ward collinearity.
+3. **Atomic Transaction Commit**: Requires explicit preview approval token; executes all inserts inside a single database transaction.
+
+#### Security & RBAC
+Implemented in [`backend/app/core/security.py`](file:///C:/Users/zeina/.gemini/antigravity/scratch/biopress-analytics/backend/app/core/security.py):
+- **Role-Based Access Control**:
+  - `admin`: Data import, CSV upload, ML re-training.
+  - `analyst`: Analytics queries, ML inspection, report generation, CSV export.
+  - `viewer`: Read-only overview and compliance visualizations.
+- **Authentication**: Short-lived JSON Web Tokens (JWT) signed with HS256; password hashing with standard native `bcrypt`.
+- **CSV Formula Injection (DDE) Prevention**: `sanitize_csv_cell()` automatically escapes cells starting with `=`, `+`, `-`, or `@` by prepending `'`, preventing malicious command execution in Excel.
+- **Privacy Thresholds**: Subgroups with $n < 5$ have their compliance rate withheld (`None`); subgroups with $n < 30$ are tagged with small-sample confidence interval warnings.
+
+---
+
+### Track B: Backend Architecture & Statistical Engine
+
+#### Endpoints & Routing
+All routes are organized modularly under [`backend/app/api/`](file:///C:/Users/zeina/.gemini/antigravity/scratch/biopress-analytics/backend/app/api):
+- `GET /health`: System liveness check.
+- `POST /api/v1/auth/login` & `GET /api/v1/auth/me`: Token issuance and profile retrieval.
+- `GET /api/v1/analytics/summary`: Overall hospital metrics with multi-parameter filtering (`ward`, `shift`, `profcat`, `indication`).
+- `GET /api/v1/analytics/by-{ward,shift,indication,profcat}`: Group compliance calculations with Wilson CIs and chi-square tests.
+- `GET /api/v1/analytics/records`: Paginated, filterable Data Explorer view.
+- `POST /api/v1/imports/preview` & `POST /api/v1/imports/commit`: Two-stage import pipeline.
+- `GET /api/v1/ml/evaluation`, `POST /api/v1/ml/train`, `POST /api/v1/ml/explain`: ML benchmark reporting and local scenario inference.
+- `GET /api/v1/reports/summary` & `GET /api/v1/reports/export-csv`: Formatted executive audit and sanitized export.
+- `POST /api/v1/agent/query`: Clinical decision-support agent.
+
+#### Scientific Wilson Score Interval
+Implemented in [`backend/app/services/analytics.py`](file:///C:/Users/zeina/.gemini/antigravity/scratch/biopress-analytics/backend/app/services/analytics.py):
+$$\tilde{p} = \frac{p + \frac{z^2}{2n}}{1 + \frac{z^2}{n}} \pm \frac{z}{1 + \frac{z^2}{n}} \sqrt{\frac{p(1-p)}{n} + \frac{z^2}{4n^2}}$$
+The Wilson score interval provides reliable coverage even when $p$ is close to 0 or 1 and sample sizes are modest, avoiding the failure modes of the normal approximation.
+
+---
+
+### Track C: Interactive Clinical Dashboard
+
+Built using clean, modern, zero-dependency HTML5, CSS3, and JavaScript, served directly by FastAPI.
+
+#### Visualizations & Custom Chart.js Plugin
+Located in [`frontend/js/charts.js`](file:///C:/Users/zeina/.gemini/antigravity/scratch/biopress-analytics/frontend/js/charts.js):
+- Includes a custom Chart.js rendering plugin (`wilsonErrorBars`) that renders vertical and horizontal confidence interval error whiskers directly on top of compliance bars.
+- Uses accessible, colorblind-safe palettes (deep blue `#1976d2`, teal `#00796b`, slate `#475569`, amber `#d97706`).
+
+#### 7 Cohesive Application Views
+1. **Overview Dashboard**: Stat cards with overall compliance (22.0%), sample sizes, and WHO Indication horizontal bar chart.
+2. **Compliance Analysis**: Interactive dimension selector with real-time hypothesis testing banners and Wilson CI table.
+3. **Data Explorer**: Live searchable, paginated table of all 917 opportunities with audit status badges.
+4. **Model Insights & XAI**: Benchmark comparison table, Odds Ratios table with 95% CIs, permutation importance bars, and interactive scenario risk explainer.
+5. **Audit Reports**: Formal executive summary, `@media print` print-ready view, and sanitized CSV download.
+6. **Data Importer**: Upload drag-and-drop zone with pre-flight warning inspection and single-click commit.
+7. **Clinical AI Copilot**: Interactive dialogue interface with quick prompt chips and live tool call audit logs.
+
+#### Mandatory Ethical Footer
+Every screen carries the permanent regulatory disclosure:
+> *"Observational audit data, one hospital (Debre Berhan, Ethiopia, 2017), Hawthorne effect possible, not live monitoring, no clinical impact measured. Not for ranking or disciplining staff."*
+
+---
+
+### Track D: Machine Learning & Explainability (XAI)
+
+Implemented in [`backend/app/ml/evaluate.py`](file:///C:/Users/zeina/.gemini/antigravity/scratch/biopress-analytics/backend/app/ml/evaluate.py):
+
+#### Models Benchmarked
+1. `DummyClassifier(strategy='prior')`: baseline prior probability model.
+2. `LogisticRegression(C=1.0, max_iter=1000)`: primary transparent model.
+3. `DecisionTreeClassifier(max_depth=3)`: readable shallow tree.
+4. `RandomForestClassifier(n_estimators=100, max_depth=5)`: non-linear comparison.
+
+#### 3 Rigorous Validation Designs
+1. **Repeated Stratified 5-Fold Cross Validation**: $5 \times 10 = 50$ folds to evaluate statistical stability.
+2. **Order-Based Split by Opp (70% Train / 30% Test)**: Rough temporal proxy check, explicitly noting that Opp is interleaved across wards.
+3. **Leave-One-Ward-Out CV**: Trains on 4 wards and tests on the 5th held-out ward to assess spatial generalizability across hospital environments.
+
+#### Ablation Studies & Empirical Results
+```text
+Benchmark Comparison (Repeated 5-Fold CV):
+-----------------------------------------------------------------------------
+Model               Ablation            ROC-AUC (Mean ± SD)   PR-AUC (Mean)
+-----------------------------------------------------------------------------
+Dummy (Baseline)    All Features        0.500 ± 0.000         0.220
+LogisticRegression  Indication Only     0.886 ± 0.021         0.738
+LogisticRegression  All 4 Features      0.907 ± 0.018         0.781
+DecisionTree (d=3)  All 4 Features      0.882 ± 0.024         0.742
+RandomForest        All 4 Features      0.923 ± 0.016         0.804
+LogisticRegression  Without Indication  0.504 ± 0.038         0.224
+-----------------------------------------------------------------------------
+```
+
+#### Decision Rule & Model Recommendation
+The difference between Random Forest ($0.923$) and Logistic Regression ($0.907$) is within the fold-to-fold error margin ($\pm 0.018$). Because complex non-linear ensemble models introduce opacity without clinical gain, **transparent Logistic Regression is recommended**.
+
+#### Clinical Explainability (Odds Ratios)
+Using Logistic Regression coefficients with clear reference categories:
+- **Reference Categories**:
+  - `Indication`: *"Before patient contact"*
+  - `Ward`: *"Medical"*
+  - `Shift`: *"Morning"*
+  - `Profcat`: *"Nurse"*
+- **Key Findings**:
+  - `After body fluid exposure`: **$\text{OR} = 81.67$** ($95\%\text{ CI: }[39.35 – 169.51], p < 0.001$)
+  - `After patient contact`: **$\text{OR} = 14.19$** ($95\%\text{ CI: }[7.29 – 27.63], p < 0.001$)
+  - `Before aseptic procedure`: **$\text{OR} = 0.81$** ($95\%\text{ CI: }[0.31 – 2.09], p = 0.66$) — *Not statistically different from baseline.*
+
+---
+
+### Track E: Clinical Audit AI Agent
+
+Implemented in [`backend/app/api/agent.py`](file:///C:/Users/zeina/.gemini/antigravity/scratch/biopress-analytics/backend/app/api/agent.py):
+- **Role**: Quality assurance and audit copilot.
+- **Read-Only Tools**:
+  - `tool_get_summary()`: Pulls verified counts and Wilson CIs.
+  - `tool_get_group_analysis(dim)`: Pulls group rates and chi-square test values.
+  - `tool_get_import_warnings()`: Audits target leakage and sequence integrity.
+  - `tool_get_model_evaluation()`: Retrieves benchmark metrics and conclusions.
+- **Strict Guardrails**:
+  1. *Refusal to Claim Causation*: Questions asking "why" or "what causes non-compliance" are explicitly redirected to observational correlation warnings.
+  2. *Refusal to Rank Non-Significant Wards*: When asked "which ward is best", the agent cites the $\chi^2$ test ($p = 0.21$), displays overlapping confidence intervals, and declares ranking statistically invalid.
+  3. *Zero Hallucination*: Every cited number corresponds to verified tool outputs.
+
+---
+
+## 5. Complete Repository Structure & File Index
+
+```text
+biopress-analytics/
+├── .env.example                          # Environment configuration template
+├── .gitignore                            # Git exclusion rules
+├── README.md                             # High-level overview & quickstart
+├── docker-compose.yml                    # PostgreSQL 16 + FastAPI production stack
+├── backend/
+│   ├── Dockerfile                        # Container specification
+│   ├── requirements.txt                  # Python dependencies (pinned versions)
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py                       # FastAPI application & static mount
+│   │   ├── api/
+│   │   │   ├── __init__.py
+│   │   │   ├── agent.py                  # Track E: Clinical Copilot Agent
+│   │   │   ├── analytics.py              # Track B: Summary & Group Analytics
+│   │   │   ├── auth.py                   # Track A: JWT Authentication & RBAC
+│   │   │   ├── imports.py                # Track A: CSV Upload & Commit API
+│   │   │   ├── ml.py                     # Track D: Evaluation & Inference API
+│   │   │   └── reports.py                # Track B/C: Audit Reports & Sanitized CSV
+│   │   ├── core/
+│   │   │   ├── __init__.py
+│   │   │   └── security.py               # Password hashing, JWT & CSV sanitization
+│   │   ├── db/
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py                 # SQLAlchemy relational schema
+│   │   │   └── session.py                # Engine, sessionmaker & SQL views
+│   │   ├── ml/
+│   │   │   ├── __init__.py
+│   │   │   └── evaluate.py               # Benchmark engine, CV & Odds Ratios
+│   │   ├── schemas/
+│   │   │   ├── __init__.py
+│   │   │   ├── agent.py                  # Agent schemas
+│   │   │   ├── analytics.py              # Descriptive analytics & record schemas
+│   │   │   ├── auth.py                   # Auth & token schemas
+│   │   │   ├── imports.py                # Importer preview & commit schemas
+│   │   │   └── ml.py                     # ML benchmark & prediction schemas
+│   │   └── services/
+│   │       ├── __init__.py
+│   │       ├── analytics.py              # Statistical calculations (Wilson CI, Chi²)
+│   │       ├── data_loader.py            # Raw data loader & validation
+│   │       └── importer.py               # CSV import pipeline & contract checks
+│   └── tests/
+│       ├── test_agent.py                 # Tests for Agent tools & guardrails
+│       ├── test_analytics.py             # Tests for summary, groups & Wilson CIs
+│       ├── test_db_and_import.py         # Tests for database views & importer
+│       ├── test_ml_and_xai.py            # Tests for ML leakage guard & Odds Ratios
+│       └── test_security_and_auth.py     # Tests for RBAC, formula injection & privacy
+├── data/
+│   ├── raw/
+│   │   └── hand_hygiene_data_labeled.csv # Read-only original audit dataset
+│   ├── reports/
+│   │   └── ml_evaluation_report.json     # Persisted reproducible ML benchmark artifact
+│   └── biopress.db                       # Local SQLite database with created views
+├── docs/
+│   ├── data_audit.md                     # Data audit notes
+│   ├── data_dictionary.md                # Data dictionary & column specifications
+│   ├── architecture.md                   # Full system architecture & Mermaid ERD
+│   ├── model_card.md                     # Mitchell et al. Model Card
+│   └── PROJECT_EXPLANATION.md            # This comprehensive master document
+└── scripts/
+    ├── seed_db.py                        # Database initializer, user creator & seeder
+    └── run_ml_pipeline.py                # CLI runner for reproducible ML benchmarks
+```
+
+---
+
+## 6. Operational Manual & Running Instructions
+
+### 1. Seeding the Database
+To reset the database, recreate SQL views, insert default user roles, audit the raw CSV, and verify the 917 opportunities:
+```powershell
+cd C:\Users\zeina\.gemini\antigravity\scratch\biopress-analytics
+python scripts/seed_db.py
+```
+
+### 2. Running the Full Test Suite
+Executes all 26 unit and integration tests:
+```powershell
+cd C:\Users\zeina\.gemini\antigravity\scratch\biopress-analytics\backend
+python -m pytest -v
+```
+
+### 3. Launching the Server
+```powershell
+cd C:\Users\zeina\.gemini\antigravity\scratch\biopress-analytics\backend
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+- Web Application: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- OpenAPI / Swagger Documentation: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+### 4. Running the ML Pipeline Standalone
+```powershell
+cd C:\Users\zeina\.gemini\antigravity\scratch\biopress-analytics
+python scripts/run_ml_pipeline.py
+```
+
+### 5. Running with Docker Compose
+```powershell
+cd C:\Users\zeina\.gemini\antigravity\scratch\biopress-analytics
+docker compose up --build
+```
+
+---
+
+## 7. Ethical Governance, Privacy & Clinical Limitations
+
+1. **Observational Hawthorne Effect**:
+   Observational auditing involves human observers with clipboards or tablets. Healthcare personnel are aware of observation, artificially elevating compliance. True everyday baseline compliance is likely lower.
+2. **Absence of Longitudinal Tracking**:
+   The audit contains no timestamps, dates, worker IDs, or patient IDs. The 917 opportunities cannot be used to model time-series trends or individual habit formation.
+3. **Absolute Prohibition on Disciplinary Action**:
+   Compliance variations reflect systemic workflows, glove supply availability, patient contact urgency, and bedside sink access. Using model probabilities or subgroup compliance numbers to penalize individual staff is statistically invalid and ethically impermissible.
